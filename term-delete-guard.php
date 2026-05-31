@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Term Delete Guard
+ * Plugin Name: NExT Term Delete Guard
  * Description: カテゴリー、タグ、タクソノミーに紐づく記事がある場合、削除を防止します。
  * Version: 1.0.0
  * Author: NExT-Season

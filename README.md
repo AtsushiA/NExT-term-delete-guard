@@ -1,4 +1,4 @@
-# Term Delete Guard
+# NExT Term Delete Guard
 
 カテゴリー、タグ、カスタムタクソノミーに紐づく記事がある場合、削除を防止するWordPressプラグインです。
 
