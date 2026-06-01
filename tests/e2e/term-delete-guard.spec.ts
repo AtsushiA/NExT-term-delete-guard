@@ -50,7 +50,8 @@ test.describe( 'NExT Term Delete Guard', () => {
 		await page.goto( `${ WP_BASE_URL }/wp-admin/edit-tags.php?taxonomy=category` );
 		const categoryRow = page.locator( `tr#tag-${ category.id }` );
 		await expect( categoryRow ).toBeVisible();
-		await categoryRow.locator( '.delete a' ).click();
+		// WordPress の行アクションは hover 時のみ表示されるため force: true でクリックする.
+		await categoryRow.locator( '.delete a' ).click( { force: true } );
 
 		// エラーメッセージが表示されることを確認する.
 		await expect( page.locator( '.notice-error' ) ).toBeVisible( { timeout: 5000 } );
