@@ -27,8 +27,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          # MYSQL_DATABASE を指定すると DB が既存扱いとなり install-wp-tests.sh の
-          # read -p で対話入力を求められて CI が止まる。第6引数 true で DB 作成をスキップする。
+          MYSQL_DATABASE: wordpress_test
         ports:
           - 3306:3306
         options: >-
@@ -71,6 +70,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Start wp-env
+        run: npx wp-env start
       - uses: wordpress/plugin-check-action@v1
         with:
           exclude-directories: 'vendor,tests,node_modules'
