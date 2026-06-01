@@ -75,17 +75,17 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Remove .wp-env.json so plugin-check-action creates its own config
-        run: rm -f .wp-env.json
-      - uses: wordpress/plugin-check-action@v1
-        with:
-          exclude-directories: 'vendor,tests,node_modules'
-          categories: |
-            general
-            performance
-            accessibility
-            security
-          ignore-warnings: true
+      - name: Start wp-env
+        run: npx wp-env start
+      - name: Install and activate plugin-check
+        run: npx wp-env run cli wp plugin install plugin-check --activate
+      - name: Run Plugin Check
+        run: |
+          npx wp-env run cli wp plugin check NExT-term-delete-guard \
+            --exclude-directories=vendor,tests,node_modules \
+            --categories=general,performance,accessibility,security \
+            --ignore-warnings \
+            --format=table
 
   e2e:
     name: E2E Tests

@@ -5,15 +5,26 @@ const WP_BASE_URL = process.env.WP_BASE_URL || 'http://localhost:8889';
 test.describe( 'NExT Term Delete Guard', () => {
 	test( 'プラグインが有効化されている', async ( { page } ) => {
 		await page.goto( `${ WP_BASE_URL }/wp-admin/plugins.php` );
-		// プラグイン名がプラグイン一覧に表示されている.
-		await expect( page.locator( 'text=NExT Term Delete Guard' ) ).toBeVisible();
+		// プラグイン名が有効な行に表示されている.
+		await expect(
+			page.locator( 'tr.active td.plugin-title strong', { hasText: 'NExT Term Delete Guard' } )
+		).toBeVisible();
 	} );
 
 	test( '記事が紐づくカテゴリーの削除がブロックされる', async ( { page } ) => {
-		// page.request は storageState のクッキー認証を使用する.
+		// 管理画面に移動して REST API nonce を取得する.
+		await page.goto( `${ WP_BASE_URL }/wp-admin/` );
+		const nonce = await page.evaluate(
+			() => ( window as unknown as { wpApiSettings?: { nonce?: string } } ).wpApiSettings?.nonce ?? ''
+		);
+
+		// nonce を使用してカテゴリーを作成する.
 		const catResponse = await page.request.post(
 			`${ WP_BASE_URL }/wp-json/wp/v2/categories`,
-			{ data: { name: 'e2e-test-category-' + Date.now() } }
+			{
+				data: { name: 'e2e-test-category-' + Date.now() },
+				headers: { 'X-WP-Nonce': nonce },
+			}
 		);
 
 		if ( ! catResponse.ok() ) {
@@ -31,6 +42,7 @@ test.describe( 'NExT Term Delete Guard', () => {
 					status: 'publish',
 					categories: [ category.id ],
 				},
+				headers: { 'X-WP-Nonce': nonce },
 			}
 		);
 
