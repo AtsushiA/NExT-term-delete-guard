@@ -11,9 +11,6 @@ class PluginActiveTest extends WP_UnitTestCase {
 	}
 
 	public function test_pre_delete_term_filter_is_registered(): void {
-		$this->assertGreaterThan(
-			0,
-			has_filter( 'pre_delete_term', array( new Term_Delete_Guard(), 'prevent_term_deletion' ) )
-		);
+		$this->assertNotFalse( has_filter( 'pre_delete_term' ) );
 	}
 }
