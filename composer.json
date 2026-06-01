@@ -1,0 +1,42 @@
+{
+  "name": "next-season/next-term-delete-guard",
+  "description": "カテゴリー、タグ、タクソノミーに紐づく記事がある場合、削除を防止するWordPressプラグイン",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "NExT-Season",
+      "homepage": "https://next-season.net"
+    }
+  ],
+  "require": {
+    "php": ">=8.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "^3.0",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "yoast/wp-test-utils": "*"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "NExT\\TermDeleteGuard\\Tests\\": "tests/phpunit/"
+    }
+  },
+  "scripts": {
+    "phpcs": "phpcs",
+    "phpcbf": "phpcbf",
+    "test": "phpunit",
+    "test:unit": "phpunit --testsuite unit",
+    "test:integration": "phpunit --testsuite integration"
+  },
+  "config": {
+    "platform": {
+      "php": "8.3"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}

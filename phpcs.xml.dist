@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<ruleset name="NExT Term Delete Guard">
+    <description>Custom ruleset for NExT Term Delete Guard</description>
+
+    <!-- 対象ファイル -->
+    <file>./term-delete-guard.php</file>
+
+    <!-- 除外 -->
+    <exclude-pattern>./vendor/*</exclude-pattern>
+    <exclude-pattern>./node_modules/*</exclude-pattern>
+    <exclude-pattern>./tests/*</exclude-pattern>
+
+    <!-- WordPress Coding Standards -->
+    <rule ref="WordPress">
+        <!-- プラグインのメインファイルはクラス名と異なるファイル名を使用する慣習 -->
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+    </rule>
+
+    <!-- PHP互換性チェック -->
+    <rule ref="PHPCompatibilityWP"/>
+
+    <!-- PHP バージョン -->
+    <config name="testVersion" value="8.0-"/>
+
+    <!-- テキストドメイン -->
+    <config name="text_domain" value="term-delete-guard"/>
+
+    <!-- プレフィックス -->
+    <config name="prefixes" value="term_delete_guard,Term_Delete_Guard"/>
+    <config name="minimum_wp_version" value="6.5"/>
+</ruleset>
