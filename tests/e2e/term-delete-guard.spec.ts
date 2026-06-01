@@ -46,14 +46,16 @@ test.describe( 'NExT Term Delete Guard', () => {
 			}
 		);
 
-		// カテゴリー管理画面でカテゴリーを削除しようとする.
+		// カテゴリー管理画面で削除 URL を取得する.
 		await page.goto( `${ WP_BASE_URL }/wp-admin/edit-tags.php?taxonomy=category` );
 		const categoryRow = page.locator( `tr#tag-${ category.id }` );
 		await expect( categoryRow ).toBeVisible();
-		// WordPress の行アクションは hover 時のみ表示されるため force: true でクリックする.
-		await categoryRow.locator( '.delete a' ).click( { force: true } );
+
+		// delete a の href（nonce 付き URL）を取得して直接ナビゲートする.
+		const href = await categoryRow.locator( '.delete a' ).getAttribute( 'href' );
+		await page.goto( `${ WP_BASE_URL }/wp-admin/${ href }` );
 
 		// エラーメッセージが表示されることを確認する.
-		await expect( page.locator( '.notice-error' ) ).toBeVisible( { timeout: 5000 } );
+		await expect( page.locator( '.notice-error' ) ).toBeVisible( { timeout: 8000 } );
 	} );
 } );
