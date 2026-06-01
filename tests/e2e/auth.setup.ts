@@ -1,4 +1,4 @@
-import { test as setup, expect } from '@wordpress/e2e-test-utils-playwright';
+import { test as setup, expect } from '@playwright/test';
 
 const authFile = 'tests/e2e/.auth/user.json';
 

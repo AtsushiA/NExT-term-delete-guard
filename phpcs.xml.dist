@@ -11,7 +11,10 @@
     <exclude-pattern>./tests/*</exclude-pattern>
 
     <!-- WordPress Coding Standards -->
-    <rule ref="WordPress"/>
+    <rule ref="WordPress">
+        <!-- プラグインのメインファイルはクラス名と異なるファイル名を使用する慣習 -->
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+    </rule>
 
     <!-- PHP互換性チェック -->
     <rule ref="PHPCompatibilityWP"/>

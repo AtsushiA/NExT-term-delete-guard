@@ -75,8 +75,6 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Start wp-env
-        run: npx wp-env start
       - uses: wordpress/plugin-check-action@v1
         with:
           exclude-directories: 'vendor,tests,node_modules'
