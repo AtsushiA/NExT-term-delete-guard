@@ -55,7 +55,7 @@ test.describe( 'NExT Term Delete Guard', () => {
 		const href = await categoryRow.locator( '.delete a' ).getAttribute( 'href' );
 		await page.goto( `${ WP_BASE_URL }/wp-admin/${ href }` );
 
-		// エラーメッセージが表示されることを確認する.
-		await expect( page.locator( '.notice-error' ) ).toBeVisible( { timeout: 8000 } );
+		// プラグインのエラーメッセージが表示されることを確認する（dismissible な通知のみ対象）.
+		await expect( page.locator( '.notice-error.is-dismissible' ) ).toBeVisible( { timeout: 8000 } );
 	} );
 } );
