@@ -5,10 +5,11 @@ const WP_BASE_URL = process.env.WP_BASE_URL || 'http://localhost:8889';
 test.describe( 'NExT Term Delete Guard', () => {
 	test( 'プラグインが有効化されている', async ( { page } ) => {
 		await page.goto( `${ WP_BASE_URL }/wp-admin/plugins.php` );
-		// プラグイン名が有効な行に表示されている.
-		await expect(
-			page.locator( 'tr.active td.plugin-title strong', { hasText: 'NExT Term Delete Guard' } )
-		).toBeVisible();
+		// data-slug は WordPress がプラグイン名を sanitize_title() した値.
+		const pluginRow = page.locator(
+			'tr[data-slug="next-term-delete-guard"]'
+		);
+		await expect( pluginRow ).toHaveClass( /active/ );
 	} );
 
 	test( '記事が紐づくカテゴリーの削除がブロックされる', async ( { page } ) => {
